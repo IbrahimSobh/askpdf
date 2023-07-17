@@ -18,12 +18,12 @@ QA_CHAIN_PROMPT = PromptTemplate.from_template(template)
 def generate_response(uploaded_file, google_api_key, query_text):
     # Load document if file is uploaded
     if uploaded_file is not None:
-        # documents = [uploaded_file.read().decode()]
-        st.write(uploaded_file)
-        #loader = PyPDFLoader("example_data/layout-parser-paper.pdf")
-        #pages = loader.load_and_split()
+        documents = [uploaded_file.read().decode()]
+        #st.write(uploaded_file)
+        # loader = PyPDFLoader("example_data/layout-parser-paper.pdf")
+        # pages = loader.load_and_split()
 
-        return 
+        # return 
         
         # Split documents into chunks
         text_splitter = RecursiveCharacterTextSplitter(chunk_size=512, chunk_overlap=32, separators=["\n\n", "\n", ",", " ", "."])
