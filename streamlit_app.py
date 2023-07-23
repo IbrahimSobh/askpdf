@@ -45,9 +45,12 @@ def generate_response(uploaded_file, google_api_key, query_text):
     
             st.write("after defining qa")
             st.write(query_text)
-            res = qa({"query": query_text})
-            st.write("after calling aq")
-            return res
+            try:
+              res = qa({"query": query_text})
+              return res  
+            except:
+              st.write("An error occurred")
+
         return
 
 
