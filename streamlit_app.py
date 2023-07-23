@@ -26,45 +26,29 @@ def generate_response(uploaded_file, google_api_key, query_text):
             pages = loader.load_and_split()
             st.write(len(pages))
             st.write(pages[0])
-    else:
-        return 
+            st.write(pages[-1])
+        
+            # Select embeddings
+            embeddings = GooglePalmEmbeddings(google_api_key=google_api_key)
             
-        
-        #st.write(pages[0])
-        #st.write(pages[-1])
-        # loader = PyMuPDFLoader("example_data/layout-parser-paper.pdf")
-        # documents = [uploaded_file.read().decode()]
-        #st.write(uploaded_file)
-        # loader = PyPDFLoader("example_data/layout-parser-paper.pdf")
-        # pages = loader.load_and_split()
-
-        #return 
-        
-        # Split documents into chunks
-        #text_splitter = RecursiveCharacterTextSplitter(chunk_size=512, chunk_overlap=32, separators=["\n\n", "\n", ",", " ", "."])
-        #texts = text_splitter.create_documents(documents)
-        
-        # Select embeddings
-        embeddings = GooglePalmEmbeddings(google_api_key=google_api_key)
-        
-        # Create a vectorstore from documents
-        db = Chroma.from_documents(pages, embeddings) 
-        
-        # Create retriever interface
-        retriever = db.as_retriever(k=3)
-        # retriever = db.as_retriever(k=2, fetch_k=4)
-        # retriever = db.as_retriever(search_type="similarity_score_threshold", search_kwargs={"score_threshold": .9})
-        
-        # Create QA chain
-        #qa = RetrievalQA.from_chain_type(llm=GooglePalm(google_api_key=google_api_key, temperature=0.1, max_output_tokens=128), chain_type="stuff", retriever=retriever)
-        qa = RetrievalQA.from_chain_type(llm=GooglePalm(google_api_key=google_api_key, temperature=0.1, max_output_tokens=128),
-                                         chain_type="stuff",
-                                         retriever=retriever,
-                                         return_source_documents=True,
-                                         chain_type_kwargs={"prompt": QA_CHAIN_PROMPT})
+            # Create a vectorstore from documents
+            db = Chroma.from_documents(pages, embeddings) 
+            
+            # Create retriever interface
+            retriever = db.as_retriever(k=3)
+            # retriever = db.as_retriever(k=2, fetch_k=4)
+            # retriever = db.as_retriever(search_type="similarity_score_threshold", search_kwargs={"score_threshold": .9})
+            
+            # Create QA chain
+            #qa = RetrievalQA.from_chain_type(llm=GooglePalm(google_api_key=google_api_key, temperature=0.1, max_output_tokens=128), chain_type="stuff", retriever=retriever)
+            qa = RetrievalQA.from_chain_type(llm=GooglePalm(google_api_key=google_api_key, temperature=0.1, max_output_tokens=128),
+                                             chain_type="stuff",
+                                             retriever=retriever,
+                                             return_source_documents=True,
+                                             chain_type_kwargs={"prompt": QA_CHAIN_PROMPT})
     
-        return qa({"query": query_text})
-        #return qa.run(query_text)
+            return qa({"query": query_text})
+        return
 
 
 # Page title
