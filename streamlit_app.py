@@ -21,13 +21,10 @@ def generate_response(uploaded_file, google_api_key, query_text):
     if uploaded_file is not None:
         with NamedTemporaryFile(dir='.', suffix='.pdf') as f:
             f.write(uploaded_file.getbuffer())
-            # st.write(f.name)
             loader = PyPDFLoader(f.name)
             pages = loader.load_and_split()
-            st.write(len(pages))
-            st.write(pages[0])
-            st.write(pages[-1])
-        
+            st.write("Number of pages=  ", len(pages))
+            
             # Select embeddings
             embeddings = GooglePalmEmbeddings(google_api_key=google_api_key)
             
@@ -52,8 +49,8 @@ def generate_response(uploaded_file, google_api_key, query_text):
 
 
 # Page title
-st.set_page_config(page_title='Ask your PDF via PaLM🌴 Model , LangChain 🦜🔗 and Chroma. By: Ibrahim Sobh')
-st.title('Ask your PDF via PaLM🌴 Model , LangChain 🦜🔗 and Chroma. By: Ibrahim Sobh')
+st.set_page_config(page_title='Ask your PDF via PaLM🌴 Model , LangChain 🦜🔗 and Chroma vector DB. By: Ibrahim Sobh')
+st.title('Ask your PDF via PaLM🌴 Model , LangChain 🦜🔗 and Chroma vector DB. By: Ibrahim Sobh')
 
 # File upload
 #uploaded_file = st.file_uploader('Upload text file', type='txt')
@@ -74,7 +71,6 @@ with st.form('myform', clear_on_submit=True):
             result.append(response)
             del google_api_key
 
-st.write(result)
 if len(result):
     st.markdown('**Answer:** **:blue[' + response['result'] + "]**")
     st.markdown('---')
@@ -82,3 +78,5 @@ if len(result):
     for i, sd in enumerate(response['source_documents']):
         # st.markdown('**Ref ' + str(i) + '** :green[' + sd.page_content[:70] + "... ]")         
         st.markdown('**Page:** :green[' + str(sd.metadata["page"]) + "]")
+else:
+    st.markdown("No results found!")
