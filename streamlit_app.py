@@ -22,10 +22,15 @@ def generate_response(uploaded_file, google_api_key, query_text):
     if uploaded_file is not None:
         with NamedTemporaryFile(dir='.', suffix='.pdf') as f:
             f.write(uploaded_file.getbuffer())
-            #st.write(f.name)
+            st.write(f.name)
             loader = PyMuPDFLoader(f.name)
+            pages = loader.load()
+            st.write(len(pages))
+            st.write(pages[0])
+    else:
+        return 
             
-        pages = loader.load()
+        
         #st.write(pages[0])
         #st.write(pages[-1])
         # loader = PyMuPDFLoader("example_data/layout-parser-paper.pdf")
