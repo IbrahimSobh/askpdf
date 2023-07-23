@@ -5,7 +5,9 @@ from langchain.llms import GooglePalm
 from langchain.embeddings import GooglePalmEmbeddings
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.prompts import PromptTemplate
-from langchain.document_loaders import PyPDFLoader
+#from langchain.document_loaders import PyPDFLoader
+from langchain.document_loaders import PyMuPDFLoader
+from tempfile import NamedTemporaryFile
 
 
 # Build prompt
@@ -18,12 +20,21 @@ QA_CHAIN_PROMPT = PromptTemplate.from_template(template)
 def generate_response(uploaded_file, google_api_key, query_text):
     # Load document if file is uploaded
     if uploaded_file is not None:
-        documents = [uploaded_file.read().decode()]
+        with NamedTemporaryFile(dir='.', suffix='.pdf') as f:
+            f.write(uploaded_file.getbuffer())
+            st.write(f.name)
+            loader = PyMuPDFLoader(f.name)
+            
+        pages = loader.load()
+        st.write(pages[0])
+        st.write(pages[-1])
+        # loader = PyMuPDFLoader("example_data/layout-parser-paper.pdf")
+        # documents = [uploaded_file.read().decode()]
         #st.write(uploaded_file)
         # loader = PyPDFLoader("example_data/layout-parser-paper.pdf")
         # pages = loader.load_and_split()
 
-        # return 
+        return 
         
         # Split documents into chunks
         text_splitter = RecursiveCharacterTextSplitter(chunk_size=512, chunk_overlap=32, separators=["\n\n", "\n", ",", " ", "."])
