@@ -74,7 +74,9 @@ with st.form('myform', clear_on_submit=True):
         with st.spinner('Calculating...'):
             response = generate_response(uploaded_file, google_api_key, query_text)
             st.write(response)
-            result.append(response)
+            if response:
+                result.append(response)
+                st.write("result.append(response)")
             del google_api_key
 
 if len(result):
