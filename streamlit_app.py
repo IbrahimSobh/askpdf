@@ -22,29 +22,29 @@ def generate_response(uploaded_file, google_api_key, query_text):
     if uploaded_file is not None:
         with NamedTemporaryFile(dir='.', suffix='.pdf') as f:
             f.write(uploaded_file.getbuffer())
-            st.write(f.name)
+            #st.write(f.name)
             loader = PyMuPDFLoader(f.name)
             
         pages = loader.load()
-        st.write(pages[0])
-        st.write(pages[-1])
+        #st.write(pages[0])
+        #st.write(pages[-1])
         # loader = PyMuPDFLoader("example_data/layout-parser-paper.pdf")
         # documents = [uploaded_file.read().decode()]
         #st.write(uploaded_file)
         # loader = PyPDFLoader("example_data/layout-parser-paper.pdf")
         # pages = loader.load_and_split()
 
-        return 
+        #return 
         
         # Split documents into chunks
-        text_splitter = RecursiveCharacterTextSplitter(chunk_size=512, chunk_overlap=32, separators=["\n\n", "\n", ",", " ", "."])
-        texts = text_splitter.create_documents(documents)
+        #text_splitter = RecursiveCharacterTextSplitter(chunk_size=512, chunk_overlap=32, separators=["\n\n", "\n", ",", " ", "."])
+        #texts = text_splitter.create_documents(documents)
         
         # Select embeddings
         embeddings = GooglePalmEmbeddings(google_api_key=google_api_key)
         
         # Create a vectorstore from documents
-        db = Chroma.from_documents(texts, embeddings) 
+        db = Chroma.from_documents(pages, embeddings) 
         
         # Create retriever interface
         retriever = db.as_retriever(k=3)
