@@ -73,10 +73,12 @@ with st.form('myform', clear_on_submit=True):
     if submitted and google_api_key:
         with st.spinner('Calculating...'):
             response = generate_response(uploaded_file, google_api_key, query_text)
+            st.write(response)
             result.append(response)
             del google_api_key
 
 if len(result):
+    st.write(len(result))
     st.markdown('**Answer:** **:blue[' + response['result'] + "]**")
     st.markdown('---')
     st.markdown('**References:** ')
