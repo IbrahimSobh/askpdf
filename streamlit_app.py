@@ -43,8 +43,6 @@ def generate_response(uploaded_file, google_api_key, query_text):
                                              return_source_documents=True,
                                              chain_type_kwargs={"prompt": QA_CHAIN_PROMPT})
     
-            st.write("after defining qa")
-            st.write(query_text)
             try:
               res = qa({"query": query_text})
               return res  
