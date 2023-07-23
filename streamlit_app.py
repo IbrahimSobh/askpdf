@@ -3,7 +3,6 @@ from langchain.vectorstores import Chroma
 from langchain.chains import RetrievalQA
 from langchain.llms import GooglePalm
 from langchain.embeddings import GooglePalmEmbeddings
-# from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.prompts import PromptTemplate
 from langchain.document_loaders import PyPDFLoader
 from tempfile import NamedTemporaryFile
