@@ -5,8 +5,7 @@ from langchain.llms import GooglePalm
 from langchain.embeddings import GooglePalmEmbeddings
 # from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.prompts import PromptTemplate
-#from langchain.document_loaders import PyPDFLoader
-from langchain.document_loaders import PyMuPDFLoader
+from langchain.document_loaders import PyPDFLoader
 from tempfile import NamedTemporaryFile
 
 
@@ -22,9 +21,9 @@ def generate_response(uploaded_file, google_api_key, query_text):
     if uploaded_file is not None:
         with NamedTemporaryFile(dir='.', suffix='.pdf') as f:
             f.write(uploaded_file.getbuffer())
-            st.write(f.name)
-            loader = PyMuPDFLoader(f.name)
-            pages = loader.load()
+            # st.write(f.name)
+            loader = PyPDFLoader(f.name)
+            pages = loader.load_and_split()
             st.write(len(pages))
             st.write(pages[0])
     else:
