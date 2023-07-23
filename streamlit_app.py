@@ -63,7 +63,6 @@ result = []
 with st.form('myform', clear_on_submit=True):
     google_api_key = st.text_input('Google PaLM🌴 API Key', type='password', disabled=not (uploaded_file and query_text))
     submitted = st.form_submit_button('Submit', disabled=not(uploaded_file and query_text))
-    #if submitted and openai_api_key.startswith('AIz'):
     if submitted and google_api_key:
         with st.spinner('Calculating...'):
             response = generate_response(uploaded_file, google_api_key, query_text)
