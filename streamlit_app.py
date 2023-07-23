@@ -81,4 +81,4 @@ if len(result):
     st.markdown('**References:** ')
     for i, sd in enumerate(response['source_documents']):
         # st.markdown('**Ref ' + str(i) + '** :green[' + sd.page_content[:70] + "... ]")         
-        st.markdown('**Page ** :green[ ' + str(sd.metadata["page"]) + " ]")
+        st.markdown('**Page:** :green[' + str(sd.metadata["page"]) + "]")
