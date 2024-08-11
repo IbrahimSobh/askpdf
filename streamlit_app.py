@@ -1,5 +1,6 @@
 import streamlit as st
-from langchain.vectorstores import Chroma
+#from langchain.vectorstores import Chroma
+from langchain_community.vectorstores import Chroma
 from langchain.chains import RetrievalQA
 from langchain.llms import GooglePalm
 from langchain.embeddings import GooglePalmEmbeddings
